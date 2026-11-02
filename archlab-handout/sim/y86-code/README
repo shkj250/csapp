@@ -1,0 +1,32 @@
+This directory contains examples of Y86-64 assembly code programs
+(extension `.ys') used in Chapter 4 of CS:APP3e.
+
+中文：本目录包含 CS:APP 第三版第 4 章使用的 Y86-64 汇编示例，扩展名为 .ys。
+
+Given an assembly code file "file.ys", you can assemble it with the
+command "make file.yo".  The resulting file is in the "object code"
+format described in the book.
+
+中文：给定 file.ys，用 make file.yo 汇编；生成文件采用教材所述的目标代码格式。
+
+You can assemble and simulate all the test programs in this directory.
+First, you need to make the different simulators in the pipe (psim)
+and seq (ssim and ssim+) directories.  Then use the following
+commands:
+
+中文：可以汇编并模拟本目录全部测试程序。先构建 pipe/ 中的 psim，以及 seq/ 中的 ssim、
+ssim+，再运行以下命令：
+
+PIPE: make testpsim
+SEQ: make testssim
+SEQ+: make testssim+
+
+中文：PIPE 用 make testpsim；SEQ 用 make testssim；SEQ+ 用 make testssim+。
+
+Each of these commands will cause a number of programs to be assembled
+and simulated.  Lots of things will scroll by, but you should see the message
+"ISA Check Succeeds" for each of the programs tested.
+
+中文：每条命令都会汇编并模拟多个程序。输出较多，每个被测程序都应出现 "ISA Check
+Succeeds"，表示 ISA 校验成功。
+

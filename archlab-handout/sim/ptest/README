@@ -1,0 +1,60 @@
+This directory contains Perl scripts that provide comprehensive
+regression testing of the different Y86-64 simulators.  There are four
+basic test types, implemented as four different scripts:
+
+中文：本目录包含对不同 Y86-64 模拟器进行全面回归测试的 Perl 脚本。四种基本测试分别由
+四个脚本实现：
+
+	optest.pl:	Tests each individual instruction type
+	jtest.pl:	Tests all of the jump types under different conditions
+	ctest.pl:	Tests different pipeline control combinations
+	htest.pl:	Tests many different hazard possibilities
+			This involves running 864+ tests, so it takes a while.
+
+中文：optest.pl：测试各指令类型；
+jtest.pl：测试各种条件下的跳转；
+ctest.pl：测试流水线控制组合；
+htest.pl：测试多种冒险情况，包含 864 个以上测试，运行需要一定时间。
+
+Each of the tests has the following optional arguments:
+	-s simfile	Use simfile as simulator (default ../pipe/psim).
+	-i		Test the iaddq instruction
+
+中文：各测试的可选参数：-s simfile 指定模拟器，默认 ../pipe/psim；-i 测试 iaddq 指令。
+
+You can use make to run all four test programs.  Options to make include:
+
+中文：可用 make 运行全部四组测试，支持以下选项：
+
+	SIM=simfile
+	TFLAGS=<any flags you want to give to the testing scripts>
+
+中文：SIM=simfile 指定模拟器；TFLAGS=<参数> 把参数传给测试脚本。
+
+For example, you could say:
+	make SIM=../pipe/psim TFLAGS=-i
+to test the pipeline simulator including the iaddq instruction.  (Note that
+this test will fail for the default implementation of pipe, since it does
+not implement the iaddq instruction.)
+
+中文：例如 make SIM=../pipe/psim TFLAGS=-i 测试包含 iaddq 的流水线模拟器。默认 PIPE
+未实现 iaddq，所以这个测试会失败。
+
+When the test program detects an erroneous simulation, it leaves the
+.ys file in the directory (ordinarily it deletes the test code it
+generates).  You can then run a simulator (the GUI version is
+especially helpful here) on one of these failing cases.  Suppose the
+failing test is in file bad-test.ys.  Then you can execute "make
+bad-test.yo" to create the object code, and simulate it with one of
+the simulators.
+
+中文：检测到错误模拟结果时，测试器会保留对应 .ys 文件；正常情况下会删除生成的测试代
+码。可以用模拟器调试失败案例，GUI 尤其方便。例如失败文件为 bad-test.ys，运行 make
+bad-test.yo 生成目标文本，再交给模拟器执行。
+
+Note that the standard test code only detects functional bugs, where the
+processor simulation produces different results than would be
+predicted by simulating at the ISA level.  
+
+
+中文：注意：标准测试只检测功能错误，即处理器模拟结果与 ISA 级模拟所预测的结果不一致。

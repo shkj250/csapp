@@ -1,0 +1,41 @@
+################
+CS:APP Shell Lab
+################
+
+中文：CS:APP Shell Lab（命令解释器实验）。
+
+Files:
+
+中文：文件说明：
+
+Makefile	# Compiles your shell program and runs the tests
+README		# This file
+tsh.c		# The shell program that you will write and hand in
+tshref		# The reference shell binary.
+
+中文：Makefile：编译 shell 并运行测试；
+README：本说明；
+tsh.c：你需要编写和提交的 shell 程序；
+tshref：参考 shell 的二进制程序。
+
+# The remaining files are used to test your shell
+sdriver.pl	# The trace-driven shell driver
+trace*.txt	# The 15 trace files that control the shell driver
+tshref.out 	# Example output of the reference shell on all 15 traces
+
+中文：其他文件用于测试：sdriver.pl 是轨迹驱动的 shell 测试器；
+trace*.txt 是控制驱动的 15 个轨迹文件；
+tshref.out 是参考 shell 在全部 15 个轨迹上的示例输出。（15 是原文的历史数量；
+本目录实际有 trace01–trace16 共 16 个，全部需要检查。）
+
+# Little C programs that are called by the trace files
+myspin.c	# Takes argument <n> and spins for <n> seconds
+mysplit.c	# Forks a child that spins for <n> seconds
+mystop.c        # Spins for <n> seconds and sends SIGTSTP to itself
+myint.c         # Spins for <n> seconds and sends SIGINT to itself
+
+中文：轨迹调用的小型 C 程序：myspin.c 接收参数 n 并忙等 n 秒；
+mysplit.c 创建忙等 n 秒的子进程；
+mystop.c 忙等 n 秒后给自己发送 SIGTSTP；
+myint.c 忙等 n 秒后给自己发送 SIGINT。
+

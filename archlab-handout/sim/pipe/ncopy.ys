@@ -1,0 +1,69 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# 中文：ncopy.ys：将 src 的 len 个字复制到 dst
+# Return the number of positive words (>0) contained in src.
+# 中文：返回 src 中正数（大于 0）的个数
+#
+# Include your name and ID here.
+# 中文：在此填写姓名和 ID
+#
+# Describe how and why you modified the baseline code.
+# 中文：说明你怎样修改基线，以及修改原因
+#
+##################################################################
+# Do not modify this portion
+# 中文：不要修改这一部分
+# Function prologue.
+# 中文：函数入口部分
+# %rdi = src, %rsi = dst, %rdx = len
+# 中文：寄存器参数：%rdi 为源地址，%rsi 为目标地址，%rdx 为长度
+ncopy:
+
+##################################################################
+# You can modify this portion
+# 中文：可以修改这一部分
+	# Loop header
+	# 中文：循环入口
+	xorq %rax,%rax		# count = 0;
+	# 中文：计数器置零
+	andq %rdx,%rdx		# len <= 0?
+	# 中文：长度是否小于等于 0？
+	jle Done		# if so, goto Done:
+	# 中文：若是，则跳转到 Done
+
+Loop:	mrmovq (%rdi), %r10	# read val from src...
+# 中文：从 src 读取 val
+	rmmovq %r10, (%rsi)	# ...and store it to dst
+	# 中文：再将它存到 dst
+	andq %r10, %r10		# val <= 0?
+	# 中文：val 是否小于等于 0？
+	jle Npos		# if so, goto Npos:
+	# 中文：若是，则跳转到 Npos
+	irmovq $1, %r10
+	addq %r10, %rax		# count++
+	# 中文：正数计数加一
+Npos:	irmovq $1, %r10
+	subq %r10, %rdx		# len--
+	# 中文：剩余元素数减一
+	irmovq $8, %r10
+	addq %r10, %rdi		# src++
+	# 中文：源指针前进一个字
+	addq %r10, %rsi		# dst++
+	# 中文：目标指针前进一个字
+	andq %rdx,%rdx		# len > 0?
+	# 中文：是否还有元素？
+	jg Loop			# if so, goto Loop:
+	# 中文：若是，则跳转到 Loop
+##################################################################
+# Do not modify the following section of code
+# 中文：不要修改下面这段代码
+# Function epilogue.
+# 中文：函数出口部分
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+# 中文：在函数末尾保留下面的标签
+End:
+#/* $end ncopy-ys */

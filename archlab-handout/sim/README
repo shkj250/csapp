@@ -1,0 +1,160 @@
+/***********************************************************************
+ * Y86-64 Tools (Student Distribution)
+ *
+ * Copyright (c) 2002, 2010, 2015, R. Bryant and D. O'Hallaron,
+ * All rights reserved. May not be used, modified, or copied
+ * without permission.
+ ***********************************************************************/ 
+
+中文：Y86-64 工具：学生发行版。版权所有 2002、2010、2015，R. Bryant 与 D. O'Hallaron，
+保留所有权利；未经许可不得使用、修改或复制。
+
+This directory contains the student distribution of the Y86-64 tools.  It
+is a proper subset of the master distribution, minus the solution
+files found in the master distribution.
+
+中文：本目录是 Y86-64 工具的学生发行版，是完整发行版的真子集，去除了完整发行版中的解
+答文件。
+
+yas		Y86-64 assembler
+yis		Y86-64 instruction (ISA) simulator 
+hcl2c		HCL to C translator
+hcl2v		HCL to Verilog translator
+ssim		SEQ simulator
+ssim+		SEQ+ simulator
+psim		PIPE simulator
+
+中文：yas：Y86-64 汇编器；
+yis：Y86-64 指令集（ISA）模拟器；
+hcl2c：HCL 到 C 的转换器；
+hcl2v：HCL 到 Verilog 的转换器；
+ssim：SEQ 模拟器；
+ssim+：SEQ+ 模拟器；
+psim：PIPE 模拟器。
+
+*************************
+1. Building the Y86-64 tools
+*************************
+
+中文：1. 构建 Y86-64 工具。
+
+The Y86-64 simulators can be configured to support TTY and GUI
+interfaces. A simulator running in TTY mode prints all information
+about its run-time behavior on the terminal.  It's harder to understand what's
+going on, but useful for automated testing, and doesn't require any
+special installation features.  A simulator running in GUI mode uses a
+fancy graphical user interface.  Nice for visualizing and debugging,
+but requires installation of Tcl/Tk on your system.
+
+中文：模拟器可以配置为终端（TTY）或图形（GUI）界面。TTY 在终端输出运行信息，较难直观
+看懂，但方便自动测试，不要求特殊图形环境。GUI 使用图形界面，方便可视化与调试，但需要
+安装 Tcl/Tk。
+
+To build the Y86-64 tools, perform the following steps:
+
+中文：按照以下步骤构建 Y86-64 工具：
+
+NOTE: If your instructor prepared this distribution for you, then you
+can skip Step 1 and proceed directly to Step 2. The Makefile will
+already have the proper values for GUIMODE, TKLIBS, and TKINC for your
+system.
+
+中文：注意：若教师已为你准备好发行版，可跳过步骤 1，直接执行步骤 2；Makefile 中
+GUIMODE、TKLIBS、TKINC 应已适配你的系统。
+
+Step 1. Decide whether you want the TTY or GUI form of the simulators,
+and then modify ./Makefile in this directory accordingly. (The changes
+you make to the variables in this Makefile will override the values
+already assigned in the Makefiles in the seq and pipe directories.)
+
+中文：步骤 1：决定使用 TTY 还是 GUI，并相应修改当前目录 ./Makefile。这里的变量设置会
+覆盖 seq/ 和 pipe/ 的 Makefile 中已有值。
+
+Building the GUI simulators: If you have Tcl/Tk installed on your
+system, then you can build the GUI form by initializing the GUIMODE,
+TKLIBS, and TKINC variables, as appropriate for your system. (The
+default values work for Linux systems.) 
+
+中文：构建 GUI 模拟器：安装 Tcl/Tk 后，为当前系统设置 GUIMODE、TKLIBS、TKINC。（默认
+值是原发行版面向 Linux 的设置，现代系统可能需调整。）
+
+Assigning GUIMODE=-DHAS_GUI causes the necessary GUI support code in
+the simulator sources to be included.  The TKLIBS variable tells gcc
+where to look for the libtcl.so and libtk.so libraries. And the TKINC
+variable tells gcc where to find the tcl.h and tk.h header files.
+
+中文：GUIMODE=-DHAS_GUI 启用源码中的 GUI 支持。TKLIBS 告诉 gcc 去哪里查找 libtcl.so
+和 libtk.so；TKINC 告诉 gcc 去哪里查找 tcl.h 和 tk.h。
+
+Building the TTY simulators: If you don't have Tcl/Tk installed on
+your system, then build the TTY form by commenting out all three of
+these variables (GUIMODE, TKLIBS, and TKINC) in the Makefile.
+
+中文：构建 TTY 模拟器：未安装 Tcl/Tk 时，在 Makefile 中注释掉 GUIMODE、TKLIBS、TKINC
+ 三个变量即可。
+
+Step 2: Once you've modified the Makefile to build either the GUI or
+TTY form, then you can construct the entire set of Y86-64 tools by typing 
+
+中文：步骤 2：完成 GUI 或 TTY 配置后，输入以下命令构建全部工具。
+
+	unix> make clean; make
+
+中文：先清理，再构建。注意 seq/ 的 clean 会删除该目录中的 *.ys；已有个人工作时先查看
+清理规则，终端版覆盖参数见外层 LEARNING_GUIDE.md。
+
+********
+2. Files
+********
+
+中文：2. 文件说明。
+
+Makefile
+	Builds the Y86-64 tools
+
+中文：Makefile：构建 Y86-64 工具。
+
+README
+	This file
+
+中文：README：本说明。
+
+misc/	
+	Source files for the Y86-64 assembler yas, the Y86-64 instruction
+	simulator yis, and the isa.c file that is used by the -t option
+	of the processor simulators to check the results against the
+	ISA simulation.  Also contains files for the programs
+	hcl2c and hcl2v
+
+中文：misc/：yas 汇编器、yis ISA 模拟器的源码；isa.c 供处理器模拟器的 -t 选项使用，
+以 ISA 模拟结果校验处理器结果；还包含 hcl2c 和 hcl2v 的程序文件。
+
+seq/	
+	Code for the SEQ and SEQ+ simulators.  Contains HCL files for
+	labs and homework problems that involve modifying SEQ.
+
+中文：seq/：SEQ 与 SEQ+ 模拟器代码，以及修改 SEQ 的实验和习题所需 HCL 文件。
+
+pipe/	
+	Code for the PIPE simulator.  Contains HCL files for labs and
+	homework problems that involve modifying PIPE.
+
+中文：pipe/：PIPE 模拟器代码，以及修改 PIPE 的实验和习题所需 HCL 文件。
+
+y86-code/
+	Example .ys files from CS:APP and scripts for conducting
+	automated benchmark teseting of the new processor designs.
+
+中文：y86-code/：CS:APP 的 .ys 示例和自动测试新处理器设计的基准脚本。
+
+ptest/
+	Automated regression testing scripts for testing processor designs.
+
+中文：ptest/：处理器设计的自动回归测试脚本。
+
+verilog/
+	System for producing Verilog designs from HCL code
+
+
+中文：verilog/：从 HCL 生成 Verilog 设计的系统。（这是原发行版的文件列表；本压缩包未
+附 verilog/ 目录。）

@@ -1,0 +1,37 @@
+#####################################################################
+# CS:APP Architecture Lab
+# Handout files for students
+#
+# Copyright (c) 2002, 2010, 2015, R. Bryant and D. O'Hallaron,
+# All rights reserved. May not be used, modified, or copied
+# without permission.
+#
+######################################################################
+
+中文：CS:APP Architecture Lab（体系结构实验）：学生材料。版权所有 2002、2010、2015，
+R. Bryant 与 D. O'Hallaron，保留所有权利；未经许可不得使用、修改或复制。
+
+This directory contains the files that you need for the CS:APP
+architecture lab.
+
+中文：本目录包含完成 CS:APP 体系结构实验所需的文件。
+
+******
+Files:
+******
+
+中文：文件说明：
+
+Makefile		Use this to handin your solutions
+README			This file
+archlab.{ps,pdf}	Lab writeup
+sim.tar			Archive of the Y86-64 tools in tar format
+simguide.{ps,pdf}	CS:APP Guide to Simulators document	
+
+
+中文：Makefile：用于提交解答；
+README：本说明；
+archlab.{ps,pdf}：实验讲义；
+sim.tar：tar 格式的 Y86-64 工具压缩包；
+simguide.{ps,pdf}：CS:APP 模拟器使用指南。（原文列出了 ps/pdf 两种格式；
+当前只提供 PDF。）

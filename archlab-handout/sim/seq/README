@@ -1,0 +1,154 @@
+/***********************************************************************
+ * Sequential Y86-64 Simulators
+ *
+ * Copyright (c) 2002, 2010, 2013, 2015  R. Bryant and D. O'Hallaron,
+ * All rights reserved.
+ * May not be used, modified, or copied without permission.
+ ***********************************************************************/ 
+
+中文：顺序 Y86-64 模拟器。版权所有 2002、2010、2013、2015，R. Bryant 与 D. O'
+Hallaron，保留所有权利；未经许可不得使用、修改或复制。
+
+This directory contains the code to construct simulators for SEQ,
+SEQ+, and the variants of it described in the homework exercises.
+
+中文：本目录包含构建 SEQ、SEQ+ 以及教材习题中变体模拟器的代码。
+
+**************************
+1. Building the simulators
+**************************
+
+中文：1. 构建模拟器。
+
+Different versions of the SEQ and SEQ+ simulators can be constructed
+to use different HCL files when working on the different homework
+problems.
+
+中文：做不同习题时，可使用不同 HCL 文件构建 SEQ 和 SEQ+ 的不同版本。
+
+Binary	VERSION	HCL File	Description
+ssim	std	seq-std.hcl	Standard SEQ simulator described in textbook.
+ssim	full	seq-full.hcl	For adding iaddq to SEQ.
+ssim+	std	seq+-std.hcl	Standard SEQ+ simulator described in textbook.
+
+中文：Binary 为可执行程序，VERSION 为版本参数，HCL File 为控制逻辑文件，Description
+为说明。ssim/std/seq-std.hcl：教材标准 SEQ；ssim/full/seq-full.hcl：向 SEQ 添加
+iaddq；ssim+/std/seq+-std.hcl：教材标准 SEQ+。
+
+The simulators run in either TTY or GUI mode:
+
+中文：模拟器可采用 TTY 或 GUI 模式：
+
+o TTY mode: A simulator running in TTY mode prints all information
+about its runtime behavior on the terminal.  It's hard to understand what's
+going on, but useful for automated testing, and doesn't require any
+special installation features.
+
+中文：TTY 终端模式：在终端打印全部运行信息，直观性较弱，但适合自动测试，不需要特殊图
+形环境。
+
+o GUI mode: A simulator running in GUI mode uses a fancy graphical
+user interface.  Nice for visualizing and debugging, but requires
+installation of Tcl/Tk on your system.
+
+中文：GUI 图形模式：方便可视化和调试，但系统需要安装 Tcl/Tk。
+
+The Makefile has simple instructions for building TTY or GUI
+simulators. A TTY simulator runs in TTY mode only. A GUI
+simulator can run in either TTY mode or GUI mode, according to 
+a command line argument.
+
+中文：Makefile 提供两种构建方式的说明。TTY 版本只能使用终端模式；带 GUI 支持的版本可
+以根据命令行参数选择 TTY 或 GUI。
+
+Once you've configured the Makefile, you can build the different
+simulators with commands of the form
+
+中文：配置好 Makefile 后，可使用以下形式构建不同版本：
+
+	unix> make clean; make ssim VERSION=xxx
+
+中文：清理后，用 VERSION=xxx 指定版本构建 ssim。注意本目录 clean 会删除 *.ys，清理前
+检查是否有个人文件。
+
+where "xxx" is one of the versions listed above.  For example, to build
+the version of SEQ described in the CS:APP text based on the control
+logic in seq-std.hcl, type
+
+中文：xxx 是上面列出的版本之一。例如，构建教材中使用 seq-std.hcl 控制逻辑的 SEQ，命
+令如下：
+
+	unix> make clean; make ssim VERSION=std
+
+中文：清理后构建标准 std 版本的 ssim。
+
+To save typing, you can also set the Makefile's VERSION variable.
+
+中文：也可以直接设置 Makefile 的 VERSION 变量，减少输入。
+
+***********************
+2. Using the simulators
+***********************
+
+中文：2. 使用模拟器。
+
+The simulators take identical command line arguments:
+
+中文：这些模拟器接受相同的命令行参数：
+
+Usage: ssim [-htg] [-l m] [-v n] file.yo
+
+中文：用法：ssim [-htg] [-l m] [-v n] file.yo；各选项含义如下。
+
+file.yo required in GUI mode, optional in TTY mode (default stdin)
+
+中文：GUI 模式必须指定 file.yo；TTY 模式可省略，默认从标准输入读取。
+
+   -h     Print this message
+   -g     Run in GUI mode instead of TTY mode (default TTY mode)
+   -l m   Set instruction limit to m [TTY mode only] (default 10000)
+   -v n   Set verbosity level to 0 <= n <= 2 [TTY mode only] (default 2)
+   -t     Test result against the ISA simulator (yis) [TTY model only]
+
+中文：-h：显示帮助；
+-g：使用 GUI，默认 TTY；
+-l m：设置指令数上限，默认 10000，仅 TTY；
+-v n：设置详细程度，0≤n≤2，默认 2，仅 TTY；
+-t：用 yis 的 ISA 结果校验模拟结果，仅 TTY。
+
+********
+3. Files
+********
+
+中文：3. 文件说明。
+
+Makefile		Builds the SEQ and SEQ+ simulators
+Makefile-sim		Makefile for student distribution
+README			This file
+
+中文：Makefile：构建 SEQ/SEQ+；Makefile-sim：学生发行版的 Makefile；README：本说明。
+（列表保留原发行版名称，以实际文件为准。）
+
+seq+.tcl		TCL script for GUI version of SEQ+
+seq.tcl			TCL script for GUI version of SEQ
+
+中文：seq+.tcl：SEQ+ 图形界面脚本；seq.tcl：SEQ 图形界面脚本。
+
+ssim.c			Base sequential simulator code and header file
+sim.h
+
+中文：ssim.c、sim.h：顺序模拟器基础源码与头文件。
+
+seq-std.hcl		Standard SEQ control logic
+seq+-std.hcl		Standard SEQ+ control logic	
+seq-full.hcl		Template for the iaddq problem (4.34-35)
+
+中文：seq-std.hcl：标准 SEQ 控制逻辑；seq+-std.hcl：标准 SEQ+ 控制逻辑；seq-full.hcl：
+添加 iaddq 的习题模板（4.34–35）。
+
+seq-full-ans.hcl	Solution for the iaddq problems (4.34-35)
+			(Instructor distribution only)
+
+中文：seq-full-ans.hcl：iaddq 习题（4.34–35）的解答，仅在教师发行版中提供。
+
+

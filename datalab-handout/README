@@ -1,0 +1,235 @@
+***********************
+The CS:APP Data Lab
+Directions to Students
+***********************
+
+中文：CS:APP Data Lab（数据实验）：学生说明。
+
+Your goal is to modify your copy of bits.c so that it passes all the
+tests in btest without violating any of the coding guidelines.
+
+中文：目标是修改你的 bits.c，在不违反任何编码规范的前提下，通过 btest 的全部测试。
+
+
+*********
+0. Files:
+*********
+
+中文：0. 文件说明。
+
+Makefile	- Makes btest, fshow, and ishow
+README		- This file
+bits.c		- The file you will be modifying and handing in
+bits.h		- Header file
+btest.c		- The main btest program
+  btest.h	- Used to build btest
+  decl.c	- Used to build btest
+  tests.c       - Used to build btest
+  tests-header.c- Used to build btest
+dlc*		- Rule checking compiler binary (data lab compiler)	 
+driver.pl*	- Driver program that uses btest and dlc to autograde bits.c
+Driverhdrs.pm   - Header file for optional "Beat the Prof" contest
+fshow.c		- Utility for examining floating-point representations
+ishow.c		- Utility for examining integer representations
+
+中文：Makefile：构建 btest、fshow、ishow；
+README：本说明；
+bits.c：你需要修改并提交的文件；
+bits.h：头文件；
+btest.c：主测试程序；
+btest.h、decl.c、tests.c、tests-header.c：构建 btest 所需文件；
+dlc*：编码规则检查器（二进制 Data Lab 编译器）；
+driver.pl*：结合 btest 和 dlc 自动评分 bits.c 的驱动；
+Driverhdrs.pm：选做“挑战教授”竞赛的头文件；
+fshow.c：查看浮点表示的工具；
+ishow.c：查看整数表示的工具。（文件列表保留原文；
+当前目录未附 tests-header.c。）
+
+***********************************************************
+1. Modifying bits.c and checking it for compliance with dlc
+***********************************************************
+
+中文：1. 修改 bits.c，并用 dlc 检查编码规则。
+
+IMPORTANT: Carefully read the instructions in the bits.c file before
+you start. These give the coding rules that you will need to follow if
+you want full credit.
+
+中文：重要：开始前仔细阅读 bits.c 中的说明，获得满分需要遵守其中的编码规则。
+
+Use the dlc compiler (./dlc) to automatically check your version of
+bits.c for compliance with the coding guidelines:
+
+中文：使用 dlc 编译器（./dlc）自动检查 bits.c 是否符合编码规则：
+
+       unix> ./dlc bits.c
+
+中文：上面的命令检查 bits.c 的编码合法性。
+
+dlc returns silently if there are no problems with your code.
+Otherwise it prints messages that flag any problems.  Running dlc with
+the -e switch:
+
+中文：代码没有违规时，dlc 静默返回；否则输出指出问题的消息。添加 -e 选项运行：
+
+    	unix> ./dlc -e bits.c  
+
+中文：上面的命令还会报告运算符使用数量。
+
+causes dlc to print counts of the number of operators used by each function.
+
+中文：使 dlc 打印每个函数使用的运算符个数。
+
+Once you have a legal solution, you can test it for correctness using
+the ./btest program.
+
+中文：实现符合规则后，使用 ./btest 检查结果正确性。
+
+*********************
+2. Testing with btest
+*********************
+
+中文：2. 使用 btest 测试。
+
+The Makefile in this directory compiles your version of bits.c with
+additional code to create a program (or test harness) named btest.
+
+中文：本目录的 Makefile 将 bits.c 与其他支持代码一起编译为 btest，即测试程序。
+
+To compile and run the btest program, type:
+
+中文：编译并运行 btest，请输入：
+
+    unix> make btest
+    unix> ./btest [optional cmd line args]
+
+中文：先构建 btest，再运行它；方括号中的内容表示可选命令行参数，不要原样输入。
+
+You will need to recompile btest each time you change your bits.c
+program. When moving from one platform to another, you will want to
+get rid of the old version of btest and generate a new one.  Use the
+commands:
+
+中文：每次修改 bits.c 后，都需要重新编译 btest。跨平台使用时，应删除旧 btest，再重新
+构建，命令如下：
+
+    unix> make clean
+    unix> make btest
+
+中文：先清理旧构建产物，再编译 btest。
+
+Btest tests your code for correctness by running millions of test
+cases on each function.  It tests wide swaths around well known corner
+cases such as Tmin and zero for integer puzzles, and zero, inf, and
+the boundary between denormalized and normalized numbers for floating
+point puzzles. When btest detects an error in one of your functions,
+it prints out the test that failed, the incorrect result, and the
+expected result, and then terminates the testing for that function.
+
+中文：Btest 对每个函数运行数百万测试用例，覆盖整数题的 Tmin、零等特殊值，以及浮点题
+的零、无穷、非规格化数与规格化数的边界。发现错误时，输出失败输入、错误结果和期望结果，
+然后停止测试该函数。
+
+Here are the command line options for btest:
+
+中文：btest 的命令行选项如下：
+
+  unix> ./btest -h
+  Usage: ./btest [-hg] [-r <n>] [-f <name> [-1|-2|-3 <val>]*] [-T <time limit>]
+    -1 <val>  Specify first function argument
+    -2 <val>  Specify second function argument
+    -3 <val>  Specify third function argument
+    -f <name> Test only the named function
+    -g        Format output for autograding with no error messages
+    -h        Print this message
+    -r <n>    Give uniform weight of n for all problems
+    -T <lim>  Set timeout limit to lim
+
+中文：-1/-2/-3 <val>：指定第一/第二/第三个函数参数；
+-f <name>：只测试指定函数；
+-g：使用自动评分输出格式，不输出错误消息；
+-h：显示帮助；
+-r <n>：所有题统一赋予权重 n；
+-T <lim>：设置超时限制。Usage 表示命令用法。
+
+Examples:
+
+中文：使用示例：
+
+  Test all functions for correctness and print out error messages:
+  unix> ./btest
+
+中文：测试所有函数的正确性，并输出错误消息；命令如上。
+
+  Test all functions in a compact form with no error messages:
+  unix> ./btest -g
+
+中文：以紧凑格式测试全部函数，不显示错误消息；命令如上。
+
+  Test function foo for correctness:
+  unix> ./btest -f foo
+
+中文：仅测试名为 foo 的函数；foo 是示例名称，实际使用时换成你的函数名。
+
+  Test function foo for correctness with specific arguments:
+  unix> ./btest -f foo -1 27 -2 0xf
+
+中文：只测试 foo，并指定参数 27 和 0xf；命令如上。
+
+Btest does not check your code for compliance with the coding
+guidelines.  Use dlc to do that.
+
+中文：Btest 不检查编码规范，编码规范需要用 dlc 检查。
+
+*******************
+3. Helper Programs
+*******************
+
+中文：3. 辅助工具。
+
+We have included the ishow and fshow programs to help you decipher
+integer and floating point representations respectively. Each takes a
+single decimal or hex number as an argument. To build them type:
+
+中文：ishow 和 fshow 分别帮助你理解整数与浮点表示。每个工具接受一个十进制或十六进制
+数作为参数；构建方法如下：
+
+    unix> make
+
+中文：make 构建本目录定义的全部目标。
+
+Example usages:
+
+中文：使用示例：
+
+    unix> ./ishow 0x27
+    Hex = 0x00000027,	Signed = 39,	Unsigned = 39
+
+中文：输入十六进制 0x27：Hex（十六进制位模式）为 0x00000027，Signed（有符号解释）与
+Unsigned（无符号解释）均为 39。
+
+    unix> ./ishow 27
+    Hex = 0x0000001b,	Signed = 27,	Unsigned = 27
+
+中文：输入十进制 27：十六进制位模式为 0x0000001b，有符号与无符号解释均为 27。
+
+    unix> ./fshow 0x15213243
+    Floating point value 3.255334057e-26
+    Bit Representation 0x15213243, sign = 0, exponent = 0x2a, fraction = 0x213243
+    Normalized.  +1.2593463659 X 2^(-85)
+
+中文：输入十六进制编码 0x15213243：浮点值为 3.255334057e-26。Bit Representation 为位
+模式，sign 为符号位，exponent 为指数域，fraction 为尾数字段；Normalized 表示规格化数，
+数值为 +1.2593463659 × 2^(-85)。
+
+    linux> ./fshow 15213243
+    Floating point value 2.131829405e-38
+    Bit Representation 0x00e822bb, sign = 0, exponent = 0x01, fraction = 0x6822bb
+    Normalized.  +1.8135598898 X 2^(-126)
+
+中文：输入十进制编码 15213243：其位模式是 0x00e822bb，对应浮点值 2.131829405e-38；符
+号为 0、指数域为 0x01、尾数字段为 0x6822bb，是规格化数 +1.8135598898 × 2^(-126)。它
+与前例的十六进制输入不是同一个位模式。
+
+
+

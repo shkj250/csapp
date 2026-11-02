@@ -1,0 +1,66 @@
+Tiny Web server
+Dave O'Hallaron
+Carnegie Mellon University
+
+中文：Tiny Web 服务器；作者 Dave O'Hallaron，卡内基梅隆大学。
+
+This is the home directory for the Tiny server, a 200-line Web
+server that we use in "15-213: Intro to Computer Systems" at Carnegie
+Mellon University.  Tiny uses the GET method to serve static content
+(text, HTML, GIF, and JPG files) out of ./ and to serve dynamic
+content by running CGI programs out of ./cgi-bin. The default 
+page is home.html (rather than index.html) so that we can view
+the contents of the directory from a browser.
+
+中文：这里是 Tiny 服务器的主目录。Tiny 是卡内基梅隆大学“15-213：计算机系统导论”课程
+使用的约 200 行 Web 服务器。它通过 GET 从 ./ 提供文本、HTML、GIF、JPG 等静态内容，也
+通过运行 ./cgi-bin 下的 CGI 程序提供动态内容。默认页是 home.html 而非 index.html，以
+便通过浏览器查看目录内容。
+
+Tiny is neither secure nor complete, but it gives students an
+idea of how a real Web server works. Use for instructional purposes only.
+
+中文：Tiny 既不安全，也不完整，但能帮助学生理解真实 Web 服务器的工作方式，仅用于教学。
+
+The code compiles and runs cleanly using gcc 2.95.3 
+on a Linux 2.2.20 kernel.
+
+中文：原文记录：代码可在 Linux 2.2.20 内核上使用 gcc 2.95.3 正常编译运行；这是历史测
+试环境。
+
+To install Tiny:
+   Type "tar xvf tiny.tar" in a clean directory. 
+
+中文：安装 Tiny：在干净目录中输入 tar xvf tiny.tar。（当前仓库已经提供解压后的 tiny/，
+无需重复解压。）
+
+To run Tiny:
+   Run "tiny <port>" on the server machine, 
+	e.g., "tiny 8000".
+   Point your browser at Tiny: 
+	static content: http://<host>:8000
+	dynamic content: http://<host>:8000/cgi-bin/adder?1&2
+
+中文：运行 Tiny：在服务器主机上执行 tiny <port>，例如 tiny 8000；浏览器访问
+http://<host>:8000 查看静态内容，访问 http://<host>:8000/cgi-bin/adder?1&2 调用动态
+内容。（当前目录命令写作 ./tiny 8000。）
+
+Files:
+  tiny.tar		Archive of everything in this directory
+  tiny.c		The Tiny server
+  Makefile		Makefile for tiny.c
+  home.html		Test HTML page
+  godzilla.gif		Image embedded in home.html
+  README		This file	
+  cgi-bin/adder.c	CGI program that adds two numbers
+  cgi-bin/Makefile	Makefile for adder.c
+
+中文：文件：tiny.tar 是本目录全部内容的归档；
+tiny.c 是服务器源码；
+Makefile 构建 tiny.c；
+home.html 是测试页面；
+godzilla.gif 是页面内嵌图片；
+README 是本说明；
+cgi-bin/adder.c 是计算两数之和的 CGI 程序；
+cgi-bin/Makefile 构建 adder.c。（tiny.tar 是原文的发布包名，当前目录未附该归档。）
+

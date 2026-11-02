@@ -1,0 +1,8 @@
+40
+address1 = 0x401a06// mov rsp rax ret    
+adress2  pop rsi ret
+0x28
+address3 lea (%rdi,%rsi,1), %rax ret
+address4 mov rax rdi ret
+adress5 touch3
+cookie 

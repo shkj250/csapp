@@ -1,0 +1,239 @@
+/***********************************************************************
+ * Pipelined Y86-64 Simulator
+ *
+ * Copyright (c) 2002, 2010, 2015 R. Bryant and D. O'Hallaron,
+ * All rights reserved.
+ * May not be used, modified, or copied without permission.
+ ***********************************************************************/ 
+
+中文：流水线 Y86-64 模拟器。版权所有 2002、2010、2015，R. Bryant 与 D. O'Hallaron，
+保留所有权利；未经许可不得使用、修改或复制。
+
+This directory contains the code to construct simulators for PIPE and
+the variants of it described in the homework exercises.
+
+中文：本目录包含构建 PIPE 及教材习题中各变体模拟器的代码。
+
+*************************
+1. Building the simulator
+*************************
+
+中文：1. 构建模拟器。
+
+Different versions of the PIPE simulator can be constructed to use
+different HCL files when working on the different homework problems.
+
+中文：做不同习题时，可使用不同 HCL 文件构建 PIPE 的不同版本。
+
+
+Binary	VERSION		HCL File	  Description
+psim	std		pipe-std.hcl	  Standard simulator (default)
+psim	broken		pipe-broken.hcl   Does not handle any hazards
+psim	full		pipe-full.hcl	  For adding iaddq
+psim	nobypass	pipe-nobypass.hcl For implementing PIPE-
+					  (called pipe-stall.hcl in text)
+psim	lf		pipe-lf.hcl	  For implementing load forwarding
+psim	nt		pipe-nt.hcl	  For implementing NT branch prediction
+psim	btfnt		pipe-btfnt.hcl	  For implementing BTFNT branch pred.
+psim	1w		pipe-1w.hcl	  For implementing single write port
+psim	super		pipe-super.hcl	  Implements iaddq & load forwarding
+
+中文：Binary 为可执行程序，VERSION 为版本参数，HCL File 为控制文件，Description 为说
+明。std：标准模拟器（默认）；
+broken：不处理冒险；
+full：添加 iaddq；
+nobypass：实现无旁路的 PIPE-，教材称 pipe-stall.hcl；
+lf：加载转发；
+nt：预测分支不跳转；
+btfnt：预测向后跳转、向前不跳转；
+1w：单写端口；
+super：实现 iaddq 与加载转发。（super 是原文的教师版选项，当前未提供。）
+
+The Makefile can be configured to build simulators that support GUI
+and/or TTY interfaces. A simulator running in TTY mode prints all
+information about its runtime behavior on the terminal.  It's hard to
+understand what's going on, but useful for automated testing, and
+doesn't require any special installation features.  A simulator
+running in GUI mode uses a fancy graphical user interface.  Nice for
+visualizing and debugging, but requires installation of Tcl/Tk on your
+system.
+
+中文：Makefile 可配置终端 TTY 或图形 GUI 支持。TTY 在终端打印运行信息，适合自动测试
+且不需要特殊图形环境；GUI 方便可视化和调试，但需要 Tcl/Tk。
+
+The Makefile has simple instructions for building the TTY and GUI
+forms. In either case, once you've configured the Makefile, you can
+build different versions of the simulators with different HCL files
+with commands of the form:
+
+中文：Makefile 中有构建 TTY/GUI 的简要说明。配置后，可使用以下形式选择 HCL 版本：
+
+	unix> make clean; make psim VERSION=xxx
+
+中文：清理后，用 make psim VERSION=xxx 构建指定版本。
+
+where "xxx" is one of the versions listed above.  To save typing, you
+can set the Makefile's VERSION variable. For example, if you are working
+on Problems 4.52 and 4.53, which require to modify pipe-full.hcl, then 
+you could set VERSION=full in the Makefile. Typing
+
+中文：xxx 是上表版本之一。也可以设置 Makefile 的 VERSION 变量；例如习题 4.52、4.53
+修改 pipe-full.hcl，可设 VERSION=full 后运行以下命令：
+
+	unix> make clean; make psim
+
+中文：清理后构建 psim，使用 Makefile 中已设置的 VERSION。
+
+would then make the pipe-full.hcl version of PIPE.
+
+中文：这样就构建使用 pipe-full.hcl 的 PIPE 版本。
+
+***********************
+2. Using the simulators
+***********************
+
+中文：2. 使用模拟器。
+
+The simulator recognizes the following command line arguments:
+
+中文：模拟器接受以下命令行参数：
+
+Usage: psim [-htg] [-l m] [-v n] file.yo
+
+中文：用法：psim [-htg] [-l m] [-v n] file.yo；各选项含义如下。
+
+file.yo required in GUI mode, optional in TTY mode (default stdin)
+
+中文：GUI 模式必须提供 file.yo；TTY 模式可以省略，默认从标准输入读取。
+
+   -h     Print this message
+   -g     Run in GUI mode instead of TTY mode (default TTY mode)
+   -l m   Set instruction limit to m [TTY mode only] (default 10000)
+   -v n   Set verbosity level to 0 <= n <= 2 [TTY mode only] (default 2)
+   -t     Test result against the ISA simulator (yis) [TTY model only]
+
+中文：-h：显示帮助；
+-g：使用 GUI，默认 TTY；
+-l m：指令数上限，默认 10000，仅 TTY；
+-v n：详细程度，0≤n≤2，默认 2，仅 TTY；
+-t：以 yis 的 ISA 模拟结果校验结果，仅 TTY。
+
+********
+3. Files
+********
+
+中文：3. 文件说明。
+
+Makefile		Build the simulator
+Makefile-sim		Makefile for the student distribution
+README			This file
+
+中文：Makefile：构建模拟器；Makefile-sim：学生发行版构建文件；README：本说明。（原列
+表中的文件名以当前实际目录为准。）
+
+**********************************************
+* Files related to the CS:APP Architecture Lab
+**********************************************
+
+中文：与 CS:APP Architecture Lab 相关的文件。
+
+* Sample programs
+ncopy.ys		The default version of ncopy that the students optimize
+ncopy.c			C version of ncopy that defines its semantics
+
+中文：示例：ncopy.ys 是学生需要优化的默认实现；ncopy.c 是定义其语义的 C 版本。
+
+* Preconstructed driver programs (by gen-driver.pl)
+sdriver.ys		Driver that calls ncopy.ys on a short (4-word) array
+ldriver.ys		Driver that calls ncopy.ys on a longer (63-word) array 
+			Both drivers are generated automatically by the
+			Makefile by typing "make drivers".
+
+中文：gen-driver.pl 生成的驱动：sdriver.ys 对 4 个字的短数组调用 ncopy；ldriver.ys
+对 63 个字的长数组调用 ncopy；运行 make drivers 可自动生成两者。
+
+* Solution files (Instructors only)
+gen-ncopy.pl	        Generates versions of benchmark program with various
+		        optimizations.  See comments in file for explanation.
+
+中文：教师专用解答文件：gen-ncopy.pl 生成采用各种优化的基准程序版本，具体见文件注释；
+学生材料不提供解答。
+
+* Testing scripts
+gen-driver.pl		Generate a driver program for an arbitrary ncopy 
+			implementation (default ncopy.ys). Type "make drivers"
+			to construct sdriver.ys and ldriver.ys.
+benchmark.pl		Runs an implementation of ncopy on array sizes
+			1 to 64	(default ncopy.ys) and computes its performance
+			in units of CPE (cycles per element).
+correctness.pl		Runs an implementation of ncopy on array sizes 
+			0 to 64, and several longer ones and checks each for
+			correctness.
+check-len.pl		Determines number of bytes in .yo representation of
+			ncopy function.
+
+中文：测试脚本：gen-driver.pl 为任意 ncopy 实现生成驱动，默认 ncopy.ys，make drivers
+ 生成短/长驱动；
+benchmark.pl 测试 1–64 个元素并计算 CPE（每元素周期数）；
+correctness.pl 测试 0–64 及若干更长数组的正确性；
+check-len.pl 计算 ncopy 在 .yo 中的字节长度。
+
+
+****************************************************
+* HCL files for different versions of the simulators
+****************************************************
+
+中文：不同模拟器版本的 HCL 文件。
+
+pipe-std.hcl		The standard PIPE processor described in the text
+pipe-broken.hcl		A simulator that does not detect or handle hazards
+			(useful when explaining hazards in lectures)
+
+中文：pipe-std.hcl：教材标准 PIPE；pipe-broken.hcl：不检测或处理冒险的版本，适合课堂
+讲解冒险。
+
+* HCL files for various CS:APP Homework Problems
+pipe-nobypass.hcl	4.51: Build version of PIPE without bypassing 
+			(called pipe-stall.hcl in the text)
+pipe-full.hcl		4.52-53: Add iaddq instruction to PIPE
+pipe-nt.hcl		4.54: Implement branch not taken strategy
+pipe-btfnt.hcl		4.55: Implement back-taken forward-not-taken strategy
+pipe-lf.hcl		4.56: Implement load forwarding logic
+pipe-1w.hcl		4.57: Implement single ported register file
+
+中文：习题 HCL：pipe-nobypass.hcl（4.51，无旁路，教材称 pipe-stall.hcl）；
+pipe-full.hcl（4.52–53，添加 iaddq）；
+pipe-nt.hcl（4.54，预测不跳转）；
+pipe-btfnt.hcl（4.55，向后跳转/向前不跳转）；
+pipe-lf.hcl（4.56，加载转发）；
+pipe-1w.hcl（4.57，单端口寄存器文件）。
+
+* HCL solution files for the CS:APP Homework Problems (Instructors only)
+pipe-nobypass-ans.hcl	4.51 solution
+pipe-full-ans.hcl	4.52-53 solutions
+pipe-nt-ans.hcl		4.54 solution
+pipe-btfnt-ans.hcl	4.55 solution
+pipe-lf-ans.hcl		4.56 solutions
+pipe-1w-ans.hcl		4.57 solutions
+pipe-super.hcl		Gives best performance for lab
+
+中文：教师专用解答：对应的 *-ans.hcl 分别解答 4.51–4.57；pipe-super.hcl 给出实验的最
+佳性能实现。当前学生材料不附这些解答。
+
+*****************************
+* PIPE simulator source files
+*****************************
+
+中文：PIPE 模拟器源码。
+
+psim.c			Base simulator code
+sim.h			PIPE header files
+pipeline.h
+stages.h
+pipe.tcl		TCL script for the GUI version of PIPE
+
+中文：psim.c：基础模拟器代码；sim.h、pipeline.h、stages.h：PIPE 头文件；pipe.tcl：
+PIPE 图形界面的 Tcl 脚本。
+
+
+

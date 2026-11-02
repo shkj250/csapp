@@ -1,0 +1,58 @@
+#####################################################################
+# CS:APP Performance Lab
+#
+# Student's Source Files
+#
+# Copyright (c) 2002, R. Bryant and D. O'Hallaron, All rights reserved.
+# May not be used, modified, or copied without permission.
+#
+######################################################################
+
+中文：CS:APP Performance Lab（性能实验）：学生源文件。版权所有 2002，R. Bryant 与 D.
+ O'Hallaron，保留所有权利；未经许可不得使用、修改或复制。
+
+This directory contains the files you will need for the CS:APP
+Performance Lab.
+
+中文：本目录包含 CS:APP 性能实验所需文件。
+
+kernels.c
+	This is the file you will be modifying and handing in. 
+
+中文：kernels.c：需要你修改并提交的文件。
+
+#########################################
+# You shouldn't modify any of these files
+#########################################
+driver.c
+	This is the driver that tests the performance of all 
+	of the versions of the rotate and smooth kernels 
+	in your kernels.c file.
+
+中文：以下文件不应修改。driver.c：测试 kernels.c 中所有 rotate（旋转）和 smooth（平
+滑）核心版本性能的驱动程序。
+
+config.h
+	This is a site-specific configuration file that was created by 
+	your instructor	for your system.
+
+中文：config.h：教师为你所在系统生成的平台配置文件。
+
+defs.h
+	Various definitions needed by kernels.c and driver.c
+
+中文：defs.h：kernels.c 和 driver.c 所需的各种定义。
+
+clock.{c,h}
+fcyc.{c,h}
+	These contain timing routines that measure the performance of your
+	code with our k-best measurement scheme using IA32 cycle counters.
+
+中文：clock.{c,h} 和 fcyc.{c,h}：计时函数，利用 IA32 周期计数器和 k-best 测量方案评
+估代码性能。
+
+Makefile:
+	This is the makefile that builds the driver program.
+
+
+中文：Makefile：构建驱动程序的构建规则文件。

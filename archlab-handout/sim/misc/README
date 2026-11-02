@@ -1,0 +1,114 @@
+/***********************************************************************
+ * Y86-64 Assembler, Instruction Simulator, and HCL translator
+ *
+ * Copyright (c) 2002, R. Bryant and D. O'Hallaron, All rights reserved.
+ * May not be used, modified, or copied without permission.
+ ***********************************************************************/ 
+
+中文：Y86-64 汇编器、指令模拟器和 HCL 转换器。版权所有 2002，R. Bryant 与 D. O'
+Hallaron，保留所有权利；未经许可不得使用、修改或复制。
+
+This directory contains all of the source files for the following:
+
+中文：本目录包含以下工具的全部源码：
+
+YAS	Y86-64 assembler
+YIS	Y86-64 instruction level simulator
+HCL2C	HCL to C translator
+HCL2V	HCL to Verilog translator
+
+中文：YAS：Y86-64 汇编器；
+YIS：Y86-64 指令级模拟器；
+HCL2C：HCL 到 C 的转换器；
+HCL2V：HCL 到 Verilog 的转换器。
+
+*********************
+1. Building the tools
+*********************
+
+中文：1. 构建工具。
+
+unix> make clean
+unix> make
+
+中文：先运行 make clean 清理，再运行 make 构建。
+
+********
+2. Files
+********
+
+中文：2. 文件说明。
+
+Makefile		Builds yas, yis, hcl2c, hcl2v
+README			This file
+
+中文：Makefile：构建 yas、yis、hcl2c、hcl2v；README：本说明。
+
+* Versions of Makefile in the student's distribution
+* (Instructor distribution only)
+Makefile-sim	
+
+中文：学生发行版相关 Makefile 版本；原文注明 Makefile-sim 仅在教师发行版中提供。
+
+* Example programs for Part A of the CS:APP Architecture Lab
+examples.c		C versions of three Y86-64 functions 
+ans-copy.ys		Solution copy function (instructor distribution only)
+ans-sum.ys		Solution sum function (instructor distribution only)
+ans-rsum.ys		Solution rsum function (instructor distribution only)
+
+中文：Architecture Lab Part A 示例：examples.c 给出三个 Y86-64 函数对应的 C 版本；
+ans-copy.ys、ans-sum.ys、ans-rsum.ys 是复制、迭代求和和递归求和解答，仅供教师发行版。
+
+
+* Instruction simulator code shared by yas, yis, ssim, ssim+, and psim
+isa.c		
+isa.h
+
+中文：isa.c、isa.h：yas、yis、ssim、ssim+、psim 共用的指令模拟代码。
+
+* Files used to build the yas assembler
+yas			The YAS binary
+yas.c			yas source file and header file
+yas.h
+yas-grammar.lex		Y86-64 lexical scanner spec
+yas-grammar.c		Lexical scanner generated from yas-grammar.lex
+
+中文：构建 yas 所需：yas 为二进制程序；
+yas.c、yas.h 为源码和头文件；
+yas-grammar.lex 为 Y86-64 词法扫描器规格；
+yas-grammar.c 为由该规格生成的扫描器。
+
+* Files used to build the yis instruction simulator
+yis			The YIS binary
+yis.c			yis source file
+
+中文：构建 yis 所需：yis 为二进制程序，yis.c 为源码。
+
+* Files used to build the hcl2c translator
+hcl2c			The HCL2C binary
+node.c			auxiliary routines and header file
+node.h
+hcl.lex			HCL lexical scanner spec
+lex.yy.c		HCL lexical scanner generated from hcl.lex
+hcl.y			HCL grammar
+hcl.tab.c		HCL parser generated from hcl.y
+hcl.tab.h		Token definitions
+
+中文：构建 hcl2c 所需：hcl2c 为二进制程序；
+node.c、node.h 为辅助函数与头文件；
+hcl.lex 为 HCL 词法规格；
+lex.yy.c 为生成的扫描器；
+hcl.y 为 HCL 语法；
+hcl.tab.c 为生成的解析器；
+hcl.tab.h 为词法单元定义。
+
+* Example HCL programs used during the writing of the CS:APP book
+* (Instructor distribution only)
+frag.{hcl,c}
+mux4.{hcl,c}
+reg-file.{hcl,c}
+
+中文：编写 CS:APP 时使用的 HCL 示例程序：frag、mux4、reg-file 的 hcl/c 文件，原文标
+为仅教师发行版提供；当前材料是否包含某个文件，以目录实际内容为准。
+
+

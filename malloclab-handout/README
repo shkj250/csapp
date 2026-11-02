@@ -1,0 +1,87 @@
+#####################################################################
+# CS:APP Malloc Lab
+# Handout files for students
+#
+# Copyright (c) 2002, R. Bryant and D. O'Hallaron, All rights reserved.
+# May not be used, modified, or copied without permission.
+#
+######################################################################
+
+中文：CS:APP Malloc Lab（内存分配实验）：学生材料。版权所有 2002，R. Bryant 与 D. O'
+Hallaron，保留所有权利；未经许可不得使用、修改或复制。
+
+***********
+Main Files:
+***********
+
+中文：主要文件：
+
+mm.{c,h}	
+	Your solution malloc package. mm.c is the file that you
+	will be handing in, and is the only file you should modify.
+
+中文：mm.{c,h}：你实现的内存分配包。mm.c 是提交文件，也是你应修改的唯一文件。
+
+mdriver.c	
+	The malloc driver that tests your mm.c file
+
+中文：mdriver.c：测试 mm.c 的分配器驱动程序。
+
+short{1,2}-bal.rep
+	Two tiny tracefiles to help you get started. 
+
+中文：short{1,2}-bal.rep：两个帮助你开始实验的小型测试轨迹。
+
+Makefile	
+	Builds the driver
+
+中文：Makefile：构建驱动程序。
+
+**********************************
+Other support files for the driver
+**********************************
+
+中文：驱动程序的其他支持文件：
+
+config.h	Configures the malloc lab driver
+fsecs.{c,h}	Wrapper function for the different timer packages
+clock.{c,h}	Routines for accessing the Pentium and Alpha cycle counters
+fcyc.{c,h}	Timer functions based on cycle counters
+ftimer.{c,h}	Timer functions based on interval timers and gettimeofday()
+memlib.{c,h}	Models the heap and sbrk function
+
+中文：config.h：驱动配置；
+fsecs.{c,h}：不同计时包的包装接口；
+clock.{c,h}：访问 Pentium 和 Alpha 周期计数器；
+fcyc.{c,h}：基于周期计数器的计时函数；
+ftimer.{c,h}：基于间隔计时器与 gettimeofday() 的计时函数；
+memlib.{c,h}：模拟堆与 sbrk 函数。
+
+*******************************
+Building and running the driver
+*******************************
+To build the driver, type "make" to the shell.
+
+中文：构建和运行驱动：在 shell 中输入 make 构建。
+
+To run the driver on a tiny test trace:
+
+中文：在一个小型测试轨迹上运行驱动：
+
+	unix> mdriver -V -f short1-bal.rep
+
+中文：使用 -V 输出详细信息，并指定 short1-bal.rep。（当前目录运行需写 ./mdriver -V
+-f short1-bal.rep。）
+
+The -V option prints out helpful tracing and summary information.
+
+中文：-V 选项输出有用的轨迹与汇总信息。
+
+To get a list of the driver flags:
+
+中文：查看驱动选项列表：
+
+	unix> mdriver -h
+
+中文：上面的 -h 显示帮助；当前目录运行用 ./mdriver -h。
+
